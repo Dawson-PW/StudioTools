@@ -6,6 +6,8 @@ import socket
 import struct
 import traceback
 
+micon_threshold = -54
+
 p = pyaudio.PyAudio()
 
 # List all the available audio input devices
@@ -59,7 +61,7 @@ while True:
             if len(rms_values) >= 17:  # 10 * 0.1s = 1s
                 avg_rms = sum(rms_values) / len(rms_values)
                 db = 20 * log10(avg_rms)
-                if db > -54:
+                if db > micon_threshold:
                     print("MIC ON")
                     new_mic_status = 'MIC_ON'
                 else:
